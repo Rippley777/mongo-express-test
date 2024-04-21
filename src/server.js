@@ -20,6 +20,10 @@ const todoSchema = new mongoose.Schema({
 const Todo = mongoose.model('Todo', todoSchema);
 
 // API endpoints
+app.get('/', (req, res) => {
+  res.send('Welcome to the MERN Docker Example!');
+});
+
 app.get('/health', (req, res) => {
   // Perform necessary health checks, e.g., database connectivity
   res.status(200).send('OK');
