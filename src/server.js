@@ -20,28 +20,25 @@ const todoSchema = new mongoose.Schema({
 const Todo = mongoose.model('Todo', todoSchema);
 
 // API endpoints
+app.get('/health', (req, res) => {
+  // Perform necessary health checks, e.g., database connectivity
+  res.status(200).send('OK');
+});
+
 app.get('/api/todos', async (req, res) => {
-  if (Todo) {
-    const todos = await Todo.find();
-    res.json(todos || []);
-  } else {
-    res.json([]);
-  }
+  const todos = await Todo.find();
+  res.json(todos || []);
 });
 
 app.post('/api/todos', async (req, res) => {
-  if (Todo) {
-    const newTodo = new Todo(req.body);
-    const savedTodo = await newTodo.save();
-    res.json(savedTodo);
-  }
+  const newTodo = new Todo(req.body);
+  const savedTodo = await newTodo.save();
+  res.json(savedTodo);
 });
 
 app.delete('/api/todos/:id', async (req, res) => {
-  if (Todo) {
-    const result = await Todo.deleteOne({ _id: req.params.id });
-    res.json(result);
-  }
+  const result = await Todo.deleteOne({ _id: req.params.id });
+  res.json(result);
 });
 // MongoDB connection
 if (process.env.DB_URI) {
