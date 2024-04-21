@@ -5,7 +5,7 @@ const mongoose = require('mongoose');
 const cors = require('cors');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 8080;
 
 // Middleware
 app.use(cors());
@@ -21,29 +21,44 @@ const Todo = mongoose.model('Todo', todoSchema);
 
 // API endpoints
 app.get('/api/todos', async (req, res) => {
-  const todos = await Todo.find();
-  res.json(todos);
+  if (Todo) {
+    const todos = await Todo.find();
+    res.json(todos || []);
+  } else {
+    res.json([]);
+  }
 });
 
 app.post('/api/todos', async (req, res) => {
-  const newTodo = new Todo(req.body);
-  const savedTodo = await newTodo.save();
-  res.json(savedTodo);
+  if (Todo) {
+    const newTodo = new Todo(req.body);
+    const savedTodo = await newTodo.save();
+    res.json(savedTodo);
+  }
 });
 
 app.delete('/api/todos/:id', async (req, res) => {
-  const result = await Todo.deleteOne({ _id: req.params.id });
-  res.json(result);
+  if (Todo) {
+    const result = await Todo.deleteOne({ _id: req.params.id });
+    res.json(result);
+  }
 });
 // MongoDB connection
-mongoose.connect(process.env.DB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => {
-  console.log('MongoDB connected2');
+if (process.env.DB_URI) {
+
+  mongoose.connect(process.env.DB_URI, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  }).then(() => {
+    console.log('MongoDB connected');
+    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+  })
+    .catch(err => console.log(err));
+} else {
+  console.log('MongoDB not connected');
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-})
-  .catch(err => console.log(err));
+
+}
 // app.listen(5000, () => {
 //   console.log('Server is running on port 5000');
 // });
