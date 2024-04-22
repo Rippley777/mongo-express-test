@@ -55,7 +55,8 @@ if (process.env.DB_URI) {
   }).then(() => {
     console.log('MongoDB connected');
     const server = app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-    const wss = new WebSocket.Server({ server });
+    console.log({ server });
+    const wss = new WebSocket.Server({ host: '0.0.0.0', port: 8080, ...server });
 
     wss.on('connection', function connection(ws) {
       ws.on('message', function incoming(message) {
