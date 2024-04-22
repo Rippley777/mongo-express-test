@@ -1,4 +1,6 @@
 require('dotenv').config();
+const WebSocket = require('ws');
+
 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -52,7 +54,28 @@ if (process.env.DB_URI) {
     useUnifiedTopology: true,
   }).then(() => {
     console.log('MongoDB connected');
-    app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    const server = app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+    const wss = new WebSocket.Server({ server });
+
+    wss.on('connection', function connection(ws) {
+      ws.on('message', function incoming(message) {
+        console.log('received: %s', message);
+
+        // You can also send messages back to the client
+        ws.send('Message received!');
+      });
+
+      ws.send('Welcome to the WebSocket server!');
+    });
+
+    // Optional: Broadcast a message to all connected clients
+    function broadcast(data) {
+      wss.clients.forEach(function each(client) {
+        if (client.readyState === WebSocket.OPEN) {
+          client.send(data);
+        }
+      });
+    }
   })
     .catch(err => console.log(err));
 } else {
