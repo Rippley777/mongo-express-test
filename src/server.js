@@ -66,6 +66,10 @@ if (process.env.DB_URI) {
         ws.send('Message received!');
       });
 
+      ws.on('close', function close() {
+        console.log('disconnected');
+      });
+
       ws.send('Welcome to the WebSocket server!');
     });
 
