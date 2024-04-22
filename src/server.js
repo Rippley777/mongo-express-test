@@ -26,7 +26,7 @@ app.get('/', (req, res) => {
 
 app.get('/health', (req, res) => {
   // Perform necessary health checks, e.g., database connectivity
-  res.status(200).send('OK');
+  res.status(200).send(process.env.DB_URI ? 'UP' : 'DOWN');
 });
 
 app.get('/api/todos', async (req, res) => {
