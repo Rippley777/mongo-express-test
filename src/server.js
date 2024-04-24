@@ -64,7 +64,7 @@ if (process.env.DB_URI) {
         ws.on("message", function incoming(message) {
           console.log("received: %s", message);
 
-          broadcast(message);
+          broadcast(`${message}`);
           // You can also send messages back to the client
           // ws.send('Message received!');
         });
