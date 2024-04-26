@@ -77,18 +77,23 @@ if (process.env.DB_URI) {
 
       wss.on("connection", function connection(ws) {
         const userId = generateUniqueId(); // Function to generate a unique ID for each user
-        connectedUsers.add(userId);
-
-        broadcastUserList();
+        let username = `User${userId}`;
 
         ws.on("message", function incoming(message) {
           console.log("received: %s", message);
-
-          broadcast(`${message}`);
+          const data = JSON.parse(message);
+          if (data.type === "set-username") {
+            username = data.username; // Update username
+            connectedUsers.set(userId, username);
+            broadcastUserList();
+          } else {
+            broadcast(`${username}: ${message}`);
+          }
           // You can also send messages back to the client
           // ws.send('Message received!');
         });
-
+        connectedUsers.set(userId, username);
+        broadcastUserList();
         ws.on("close", function close() {
           broadcast(`${userId} has left the chat`);
           connectedUsers.delete(userId);
