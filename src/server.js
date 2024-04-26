@@ -45,6 +45,21 @@ app.delete("/api/todos/:id", async (req, res) => {
   const result = await Todo.deleteOne({ _id: req.params.id });
   res.json(result);
 });
+
+// Websocket - Chat
+function broadcastUserList() {
+  const userList = Array.from(connectedUsers);
+  wss.clients.forEach(function each(client) {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify({ type: "user-list", users: userList }));
+    }
+  });
+}
+
+function generateUniqueId() {
+  return Math.random().toString(36).substr(2, 9); // Simple unique ID generator
+}
+
 // MongoDB connection
 if (process.env.DB_URI) {
   mongoose
@@ -61,6 +76,11 @@ if (process.env.DB_URI) {
       const wss = new WebSocket.Server({ server });
 
       wss.on("connection", function connection(ws) {
+        const userId = generateUniqueId(); // Function to generate a unique ID for each user
+        connectedUsers.add(userId);
+
+        broadcastUserList();
+
         ws.on("message", function incoming(message) {
           console.log("received: %s", message);
 
@@ -70,7 +90,9 @@ if (process.env.DB_URI) {
         });
 
         ws.on("close", function close() {
-          console.log("disconnected");
+          broadcast(`${userId} has left the chat`);
+          connectedUsers.delete(userId);
+          broadcastUserList();
         });
 
         ws.send("Connected to chat!");
