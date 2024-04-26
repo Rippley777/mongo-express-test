@@ -46,18 +46,8 @@ app.delete("/api/todos/:id", async (req, res) => {
   res.json(result);
 });
 
-// Websocket - Chat
-function broadcastUserList() {
-  const userList = Array.from(connectedUsers);
-  wss.clients.forEach(function each(client) {
-    if (client.readyState === WebSocket.OPEN) {
-      client.send(JSON.stringify({ type: "user-list", users: userList }));
-    }
-  });
-}
-
 function generateUniqueId() {
-  return Math.random().toString(36).substr(2, 9); // Simple unique ID generator
+  return Math.random().toString(36).substring(2, 11); // Simple unique ID generator
 }
 const connectedUsers = new Map();
 // MongoDB connection
@@ -108,6 +98,16 @@ if (process.env.DB_URI) {
         wss.clients.forEach(function each(client) {
           if (client.readyState === WebSocket.OPEN) {
             client.send(data);
+          }
+        });
+      }
+
+      // Websocket - Chat
+      function broadcastUserList() {
+        const userList = Array.from(connectedUsers);
+        wss.clients.forEach(function each(client) {
+          if (client.readyState === WebSocket.OPEN) {
+            client.send(JSON.stringify({ type: "user-list", users: userList }));
           }
         });
       }
