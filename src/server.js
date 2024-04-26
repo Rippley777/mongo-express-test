@@ -70,24 +70,37 @@ if (process.env.DB_URI) {
         let username = `User${userId}`;
 
         ws.on("message", function incoming(message) {
-          console.log("received: %s", message);
-          const data = JSON.parse(message);
-          if (data.type === "set-username") {
-            username = data.username; // Update username
-            connectedUsers.set(userId, username);
-            broadcastUserList();
-          } else {
-            broadcast(
+          try {
+            console.log("received: %s", message);
+            const data = JSON.parse(message);
+            if (data.type === "set-username") {
+              console.log("Setting username to", data.username);
+              username = data.username; // Update username
+              connectedUsers.set(userId, username);
+              console.log("Updated users map:", connectedUsers);
+              broadcastUserList();
+            } else {
+              broadcast(
+                JSON.stringify({
+                  type: "chat-message",
+                  message: `${username}: ${data.content}`,
+                })
+              );
+            }
+          } catch (error) {
+            console.error("Failed to parse message:", message, "Error:", error);
+            // Optionally, send an error message back to the client
+            ws.send(
               JSON.stringify({
-                type: "chat-message",
-                message: `${username}: ${data.content}`,
+                type: "error",
+                message: "Invalid message format",
               })
             );
           }
           // You can also send messages back to the client
           // ws.send('Message received!');
         });
-
+        console.log({ connectedUsers });
         connectedUsers.set(userId, username);
         broadcastUserList();
 
