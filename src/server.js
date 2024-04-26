@@ -77,20 +77,27 @@ if (process.env.DB_URI) {
             connectedUsers.set(userId, username);
             broadcastUserList();
           } else {
-            broadcast(`${username}: ${message}`);
+            broadcast(
+              JSON.stringify({
+                type: "chat-message",
+                message: `${username}: ${message}`,
+              })
+            );
           }
           // You can also send messages back to the client
           // ws.send('Message received!');
         });
+
         connectedUsers.set(userId, username);
         broadcastUserList();
+
         ws.on("close", function close() {
-          broadcast(`${userId} has left the chat`);
+          broadcast(JSON.stringify({ type: "user-disconnected", userId }));
           connectedUsers.delete(userId);
           broadcastUserList();
         });
 
-        ws.send("Connected to chat!");
+        ws.send(JSON.stringify({ type: "connected" }));
       });
 
       // Optional: Broadcast a message to all connected clients
