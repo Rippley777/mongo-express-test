@@ -59,7 +59,7 @@ function broadcastUserList() {
 function generateUniqueId() {
   return Math.random().toString(36).substr(2, 9); // Simple unique ID generator
 }
-
+const connectedUsers = new Map();
 // MongoDB connection
 if (process.env.DB_URI) {
   mongoose
