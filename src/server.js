@@ -80,7 +80,7 @@ if (process.env.DB_URI) {
             broadcast(
               JSON.stringify({
                 type: "chat-message",
-                message: `${data.username}: ${data.content}`,
+                message: `${username}: ${data.content}`,
               })
             );
           }
