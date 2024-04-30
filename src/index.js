@@ -2,11 +2,18 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
-const todoRoutes = require("./routes/todoRoutes");
-const websocketConfig = require("./config/websocket");
+const YAML = require("yamljs");
+const swaggerUi = require("swagger-ui-express");
+
+const swaggerDocument = YAML.load("src/spec/open-api.yaml");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+const todoRoutes = require("./routes/todoRoutes");
+const websocketConfig = require("./config/websocket");
 
 app.use(cors());
 app.use(express.json());
