@@ -49,13 +49,26 @@ const websocketConfig = (server) => {
     });
 
     console.log({ connectedUsers });
-    broadcast(JSON.stringify({ type: "user-connected", userId }));
+    broadcast(
+      JSON.stringify({
+        type: "user-connected",
+        userId,
+        serverTimestamp: new Date().toISOString(),
+      })
+    );
     connectedUsers.set(userId, username);
     broadcastUserList();
 
     ws.on("close", function close() {
       connectedUsers.delete(userId);
-      broadcast(JSON.stringify({ type: "user-disconnected", userId }));
+      broadcast(
+        JSON.stringify({
+          type: "user-disconnected",
+          userId,
+          username,
+          serverTimestamp: new Date().toISOString(),
+        })
+      );
       broadcastUserList();
     });
   });
