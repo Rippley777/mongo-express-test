@@ -5,7 +5,71 @@ info:
   description: A simple API using MongoDB, Express, and Swagger
 
 paths:
-  /todos:
+  api/upload/image:
+    post:
+      summary: Upload an image
+      description: Allows users to upload an image file.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                image:
+                  type: string
+                  format: binary
+                  description: Image file to upload
+                name:
+                  type: string
+                  description: Name associated with the image
+            required:
+              - image
+      responses:
+        "200":
+          description: Image uploaded and saved.
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Image uploaded and saved."
+        "500":
+          description: An error occurred during the upload.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: "An error occurred."
+  api/upload/image/{id}:
+    get:
+      summary: Retrieve an image
+      description: Fetches an image by its unique identifier (ID) and returns the image data.
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: string
+          description: The unique identifier of the image to retrieve.
+      responses:
+        "200":
+          description: Successfully retrieved and returned the image data.
+          content:
+            "*/*": # Using wildcard media type as the content type varies
+              schema:
+                type: string
+                format: binary
+                description: Binary data of the image.
+        "404":
+          description: Image not found.
+          content:
+            text/plain:
+              schema:
+                type: string
+                example: "Image not found."
+  api/todos:
     get:
       summary: Retrieves all todos
       description: Fetches all todo items from the database, returning an array of todos.

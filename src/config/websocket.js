@@ -29,7 +29,7 @@ const websocketConfig = (server) => {
               serverTimestamp: new Date().toISOString(),
               userChatId: userId,
               messageId: generateUniqueId(),
-              username: data.username,
+              username: data.username || username,
               message: data.content,
             })
           );
