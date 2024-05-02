@@ -14,8 +14,14 @@ router.post("/image", upload.single("image"), async (req, res) => {
         contentType: req.file.mimetype,
       },
     });
-    await newImage.save();
-    res.send("Image uploaded and saved.");
+    const savedItem = await newImage.save();
+    res
+      .status(201)
+      .json({
+        message: "Item created successfully",
+        id: savedItem._id,
+        item: savedItem,
+      });
   } catch (error) {
     console.log(error);
     res.status(500).send("An error occurred.");

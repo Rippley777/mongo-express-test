@@ -12,14 +12,19 @@ const PORT = process.env.PORT || 8080;
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
+const userRoutes = require("./routes/userRoutes");
 const todoRoutes = require("./routes/todoRoutes");
 const uploadRoutes = require("./routes/uploadRoutes");
+const blogPostRoutes = require("./routes/blogPostRoutes");
+
 const websocketConfig = require("./config/websocket");
 
 app.use(cors());
 app.use(express.json());
+app.use("/api/user", userRoutes);
 app.use("/api/todos", todoRoutes);
 app.use("/api/upload", uploadRoutes);
+app.use("/api/blogposts", blogPostRoutes);
 
 mongoose
   .connect(process.env.DB_URI, {
