@@ -6,6 +6,7 @@ const blogPostSchema = new mongoose.Schema({
   author: String,
   images: [{ type: mongoose.Schema.Types.ObjectId, ref: "Image" }], // Array of image IDs
   date: Date,
+  featured: Boolean,
 });
 
 module.exports = mongoose.model("BlogPost", blogPostSchema);
