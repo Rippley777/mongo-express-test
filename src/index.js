@@ -17,6 +17,7 @@ const userRoutes = require("./routes/userRoutes");
 const todoRoutes = require("./routes/todoRoutes");
 const uploadRoutes = require("./routes/uploadRoutes");
 const blogPostRoutes = require("./routes/blogPostRoutes");
+const productRoutes = require("./routes/productRoutes");
 
 const websocketConfig = require("./config/websocket");
 
@@ -26,6 +27,7 @@ app.use("/api/user", userRoutes);
 app.use("/api/todos", todoRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/blogposts", blogPostRoutes);
+app.use("/api/products", productRoutes);
 
 mongoose
   .connect(process.env.DB_URI, {

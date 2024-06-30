@@ -1,11 +1,11 @@
 openapi: 3.0.0
 info:
-  title: Mongo Express API with Swagger
+  title: Prototype / Testing API
   version: 1.0.0
-  description: A simple API using MongoDB, Express, and Swagger
+  description: An API using MongoDB, Express, WebSockets and Swagger
 
 paths:
-  api/upload/image:
+  /api/upload/image:
     post:
       summary: Upload an image
       description: Allows users to upload an image file.
@@ -42,7 +42,7 @@ paths:
                   error:
                     type: string
                     example: "An error occurred."
-  api/upload/image/{id}:
+  /api/upload/image/{id}:
     get:
       summary: Retrieve an image
       description: Fetches an image by its unique identifier (ID) and returns the image data.
@@ -69,7 +69,7 @@ paths:
               schema:
                 type: string
                 example: "Image not found."
-  api/todos:
+  /api/todos:
     get:
       summary: Retrieves all todos
       description: Fetches all todo items from the database, returning an array of todos.
@@ -130,7 +130,94 @@ paths:
           description: Todo not found
         "500":
           description: Server error
+  /api/blogposts:
+    get:
+      summary: Get all blog posts
+      responses:
+        "200":
+          description: A list of blog posts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/BlogPost"
+    post:
+      summary: Create a new blog post
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/BlogPost"
+      responses:
+        "201":
+          description: The created blog post
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BlogPost"
 
+    /api/blogposts/{id}:
+      get:
+        summary: Get a blog post by ID
+        parameters:
+          - name: id
+            in: path
+            required: true
+            description: ID of the blog post to retrieve
+            schema:
+              type: string
+              format: objectId
+        responses:
+          "200":
+            description: A blog post
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/BlogPost"
+          "404":
+            description: Blog post not found
+      put:
+        summary: Update a blog post by ID
+        parameters:
+          - name: id
+            in: path
+            required: true
+            description: ID of the blog post to update
+            schema:
+              type: string
+              format: objectId
+        requestBody:
+          required: true
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BlogPost"
+        responses:
+          "200":
+            description: The updated blog post
+            content:
+              application/json:
+                schema:
+                  $ref: "#/components/schemas/BlogPost"
+          "404":
+            description: Blog post not found
+      delete:
+        summary: Delete a blog post by ID
+        parameters:
+          - name: id
+            in: path
+            required: true
+            description: ID of the blog post to delete
+            schema:
+              type: string
+              format: objectId
+        responses:
+          "204":
+            description: Blog post deleted
+          "404":
+            description: Blog post not found
 components:
   schemas:
     Todo:
@@ -151,3 +238,29 @@ components:
           description: The time at which the todo item was created
       required:
         - text
+    BlogPost:
+      type: object
+      properties:
+        content:
+          type: string
+          description: The content of the blog post
+        title:
+          type: string
+          description: The title of the blog post
+        author:
+          type: string
+          description: The author of the blog post
+        images:
+          type: array
+          description: Array of image IDs
+          items:
+            type: string
+            format: objectId
+            description: The ObjectId reference to the image
+        date:
+          type: string
+          format: date-time
+          description: The date the blog post was created
+        featured:
+          type: boolean
+          description: Indicates if the blog post is featureds

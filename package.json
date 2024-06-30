@@ -1,5 +1,5 @@
 {
-  "name": "todo-app-backend",
+  "name": "mongo-express-test",
   "version": "1.0.0",
   "description": "Backend for an application using Express and MongoDB",
   "main": "src/server.js",
@@ -9,10 +9,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/yourusername/todo-app.git"
+    "url": "https://github.com/Rippley777/mongo-express-test.git"
   },
-  "author": "Your Name",
-  "license": "ISC",
+  "author": "Ally Rippley",
+  "license": "MIT",
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^8.6.0",
