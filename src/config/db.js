@@ -1,11 +1,16 @@
 const mongoose = require("mongoose");
 
+exports.dbURL = process.env.DB_URI || "mongodb://localhost:27017/auth";
+
 const connectDB = async () => {
-  await mongoose.connect(process.env.DB_URI, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  });
-  console.log("MongoDB connected");
+  try {
+    await mongoose.connect(dbURL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    });
+  } catch (error) {
+    process.exit(1);
+  }
 };
 
 module.exports = connectDB;

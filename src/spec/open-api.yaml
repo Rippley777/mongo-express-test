@@ -218,6 +218,60 @@ paths:
             description: Blog post deleted
           "404":
             description: Blog post not found
+  /api/products:
+    post:
+      summary: Create a new product
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                manufacturer:
+                  type: string
+                model:
+                  type: string
+                description:
+                  type: string
+                price:
+                  type: number
+                  format: float
+                quantity:
+                  type: integer
+                filters:
+                  type: string
+                date:
+                  type: string
+                  format: date-time
+                featured:
+                  type: boolean
+                imageIds:
+                  type: array
+                  items:
+                    type: string
+                    format: objectId
+      responses:
+        "200":
+          description: The created product
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Product"
+
+    get:
+      summary: Get all products with images
+      responses:
+        "200":
+          description: A list of products
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Product"
 components:
   schemas:
     Todo:
@@ -264,3 +318,64 @@ components:
         featured:
           type: boolean
           description: Indicates if the blog post is featureds
+    Product:
+      type: object
+      properties:
+        title:
+          type: string
+          description: The title of the product
+        manufacturer:
+          type: string
+          description: The manufacturer of the product
+        model:
+          type: string
+          description: The model of the product
+        description:
+          type: string
+          description: The description of the product
+        price:
+          type: number
+          format: float
+          description: The price of the product
+        quantity:
+          type: integer
+          description: The quantity of the product available
+        filters:
+          type: array
+          items:
+            type: string
+          description: Filters applicable to the product
+        date:
+          type: string
+          format: date-time
+          description: The date the product was added
+        featured:
+          type: boolean
+          description: Indicates if the product is featured
+        images:
+          type: array
+          items:
+            type: string
+            format: objectId
+          description: Array of image IDs
+        availability:
+          type: array
+          items:
+            type: object
+            properties:
+              location:
+                type: string
+                description: Location where the product is available
+              quantity:
+                type: integer
+                description: Quantity available at the location
+              price:
+                type: number
+                format: float
+                description: Price at the location
+          description: Availability details of the product
+        tags:
+          type: array
+          items:
+            type: string
+          description: Tags associated with the product
