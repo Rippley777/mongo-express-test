@@ -1,5 +1,6 @@
 const db = require("../config/db");
 const Product = require("../models/Product");
+const { trace } = require("@opentelemetry/api");
 
 // const logger = require("../lib/helpers/logger");
 
@@ -43,6 +44,8 @@ exports.createProduct = async (req, res) => {
 };
 
 exports.getProducts = async (req, res) => {
+  const span = trace.getTracer("default").startSpan("fetch-products");
+
   const products = await Product.find().populate("images");
   console.log({ products });
   res.json(products);
