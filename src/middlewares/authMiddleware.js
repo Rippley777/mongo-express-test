@@ -1,6 +1,7 @@
 const jwt = require("jsonwebtoken");
 // const logger = require("../lib/helpers/logger");
 
+const { JWT_SECRET } = require("../utils/token");
 exports.requireAuth = (req, res, next) => {
   const token = req.headers.authorization?.split(" ")[1];
   // logger.info(`/player requireAuth [middleware] token: ${token}`);
