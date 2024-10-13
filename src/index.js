@@ -15,6 +15,7 @@ app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const authRoutes = require("./routes/authRoutes");
 const userRoutes = require("./routes/userRoutes");
+const guestRoutes = require("./modules/guest/routes");
 const todoRoutes = require("./routes/todoRoutes");
 const uploadRoutes = require("./routes/uploadRoutes");
 const blogPostRoutes = require("./routes/blogPostRoutes");
@@ -27,6 +28,7 @@ app.use(cors());
 app.use(express.json());
 app.use("/api/auth", authRoutes);
 app.use("/api/user", userRoutes);
+app.use("/api/guest", guestRoutes);
 app.use("/api/todos", todoRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/blogposts", blogPostRoutes);
