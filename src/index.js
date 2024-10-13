@@ -31,7 +31,7 @@ app.use("/api/todos", todoRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/blogposts", blogPostRoutes);
 app.use("/api/products", productRoutes);
-app.use("/api/appointments", appointmentRoutes);
+app.use("/api/appointments", apptRoutes);
 
 mongoose
   .connect(process.env.DB_URI, {

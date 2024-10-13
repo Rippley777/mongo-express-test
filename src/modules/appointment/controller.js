@@ -1,4 +1,4 @@
-const Appointment = require("../models/appointmentModel");
+const Appointment = require("./model");
 
 // @desc    Get all appointments
 exports.getAppointments = async (req, res) => {
@@ -12,10 +12,12 @@ exports.getAppointments = async (req, res) => {
 
 // @desc    Create new appointment
 exports.createAppointment = async (req, res) => {
-  const { title, description, date } = req.body;
+  const { title, calendarId, userId, description, date } = req.body;
   try {
     const newAppointment = new Appointment({
       title,
+      calendarId,
+      userId,
       description,
       date,
     });

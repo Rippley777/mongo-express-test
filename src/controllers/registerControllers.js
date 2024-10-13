@@ -26,10 +26,15 @@ const register = async (req, res) => {
     // console.log(chalk.green("User registered successfully:", username));
     res.status(201).send("User registered successfully");
   } catch (err) {
-    // console.error(chalk.red("Error registering user:", err));
+    // console.error("Error registering user:", err);
     // Check for duplicate username or email
     if (err.code === 11000) {
-      return res.status(400).send("Username or email already exists");
+      if (err.keyPattern.username) {
+        return res.status(403).send("Username already exists");
+      } else if (err.keyPattern.email) {
+        return res.status(403).send("Email already exists");
+      }
+      return res.status(500).send("Unknown error registering user");
     }
     res.status(500).send("Error registering user");
   }

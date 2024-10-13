@@ -5,6 +5,14 @@ const appointmentSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  calendarId: {
+    type: String,
+    required: true,
+  },
+  userId: {
+    type: String,
+    required: true,
+  },
   description: {
     type: String,
   },
@@ -12,7 +20,15 @@ const appointmentSchema = new mongoose.Schema({
     type: Date,
     required: true,
   },
+  dateCreated: {
+    type: Date,
+    default: Date.now,
+  },
   isConfirmed: {
+    type: Boolean,
+    default: false,
+  },
+  isCancelled: {
     type: Boolean,
     default: false,
   },

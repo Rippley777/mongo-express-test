@@ -4,7 +4,7 @@ const {
   createAppointment,
   updateAppointment,
   deleteAppointment,
-} = require("../controllers/appointmentController");
+} = require("./controller");
 const router = express.Router();
 
 router.get("/", getAppointments);
