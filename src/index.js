@@ -19,6 +19,7 @@ const todoRoutes = require("./routes/todoRoutes");
 const uploadRoutes = require("./routes/uploadRoutes");
 const blogPostRoutes = require("./routes/blogPostRoutes");
 const productRoutes = require("./routes/productRoutes");
+const apptRoutes = require("./modules/appointment/routes");
 
 const websocketConfig = require("./config/websocket");
 
@@ -30,6 +31,7 @@ app.use("/api/todos", todoRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/blogposts", blogPostRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/appointments", appointmentRoutes);
 
 mongoose
   .connect(process.env.DB_URI, {
