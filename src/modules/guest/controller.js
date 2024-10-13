@@ -1,6 +1,6 @@
 const bcrypt = require("bcrypt");
 // const chalk = require("chalk");
-const User = require("../../models/User");
+const User = require("./dependencies/userModel");
 const Guest = require("./model");
 
 const register = async (req, res) => {
