@@ -12,7 +12,7 @@ exports.getAppointments = async (req, res) => {
 
 // @desc    Create new appointment
 exports.createAppointment = async (req, res) => {
-  const { title, calendarId, userId, description, date } = req.body;
+  const { title, calendarId, userId, description, date, email } = req.body;
   try {
     const newAppointment = new Appointment({
       title,
@@ -20,6 +20,7 @@ exports.createAppointment = async (req, res) => {
       userId,
       description,
       date,
+      email,
     });
     await newAppointment.save();
     res.status(201).json(newAppointment);

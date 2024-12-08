@@ -21,6 +21,10 @@ const appointmentSchema = new mongoose.Schema(
       type: Date,
       required: true,
     },
+    email: {
+      type: String,
+      required: true,
+    },
     isConfirmed: {
       type: Boolean,
       default: false,
