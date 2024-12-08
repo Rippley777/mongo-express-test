@@ -22,7 +22,7 @@ const appointmentSchema = new mongoose.Schema({
   },
   dateCreated: {
     type: Date,
-    default: Date.now(),
+    default: Date.now,
   },
   isConfirmed: {
     type: Boolean,
