@@ -1,5 +1,5 @@
 const Project = require("../models/Project");
-const AuditLog = require("../../audit/models/AuditLog");
+const AuditLog = require("../models/AuditLog");
 
 const getProjects = async (req, res) => {
   try {

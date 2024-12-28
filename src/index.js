@@ -22,6 +22,7 @@ const blogPostRoutes = require("./routes/blogPostRoutes");
 const productRoutes = require("./routes/productRoutes");
 const apptRoutes = require("./modules/appointment/routes");
 const paraRoutes = require("./modules/para/routes");
+const devicesRoutes = require("./modules/devices/routes");
 
 const websocketConfig = require("./config/websocket");
 
@@ -36,6 +37,7 @@ app.use("/api/blogposts", blogPostRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/appointments", apptRoutes);
 app.use("/api/para", paraRoutes);
+app.use("/api/devices", devicesRoutes);
 
 mongoose
   .connect(process.env.DB_URI, {
