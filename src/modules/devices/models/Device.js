@@ -2,6 +2,8 @@ const mongoose = require("mongoose");
 
 const deviceSchema = new mongoose.Schema(
   {
+    type: { type: String, required: true },
+    brand: { type: String, required: true },
     model_identifier: { type: String, required: true, unique: true },
     release_year: { type: Number, required: true },
     model_number: { type: String, required: true },

@@ -1,5 +1,23 @@
 const Device = require("../models/Device");
 
+const getDeviceById = async (req, res) => {
+  const { id } = req.body;
+  try {
+    if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+      return res.status(400).json({ message: "Invalid ID format" });
+    }
+
+    const device = await Device.findById(id);
+    if (!device) {
+      return res.status(404).json({ message: "Device not found" });
+    }
+
+    res.status(200).json(device);
+  } catch (error) {
+    res.status(500).json({ error: error.message });
+  }
+};
+
 const updateDevice = async (req, res) => {
   try {
     const { id } = req.params; // Device ID from the URL
@@ -23,5 +41,6 @@ const updateDevice = async (req, res) => {
 };
 
 module.exports = {
+  getDeviceById,
   updateDevice,
 };
