@@ -42,5 +42,6 @@ const updateDevice = async (req, res) => {
 
 module.exports = {
   getDeviceById,
+  getDeviceByModelIdentifier,
   updateDevice,
 };

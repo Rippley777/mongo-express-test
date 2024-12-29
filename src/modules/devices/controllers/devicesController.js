@@ -3,11 +3,11 @@ const Device = require("../models/Device");
 const addDevice = async (req, res) => {
   try {
     const existingDevice = await Device.findOne({
-      model_identifier: req.body.model_identifier,
+      model_number: req.body.model_number,
     });
     if (existingDevice) {
       return res.status(400).json({
-        error: `A device with model_identifier '${req.body.model_identifier}' already exists.`,
+        error: `A device with model_number '${req.body.model_number}' already exists.`,
       });
     }
     const newDevice = new Device(req.body);

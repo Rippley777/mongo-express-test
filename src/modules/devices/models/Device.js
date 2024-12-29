@@ -4,9 +4,9 @@ const deviceSchema = new mongoose.Schema(
   {
     type: { type: String, required: true },
     brand: { type: String, required: true },
-    model_identifier: { type: String, required: true, unique: true },
+    model_identifier: { type: String, required: true },
     release_year: { type: Number, required: true },
-    model_number: { type: String, required: true },
+    model_number: { type: String, required: true, unique: true },
     repairability_score: { type: Number, required: true },
     hardware_details: {
       memory: { type: String, required: true },
