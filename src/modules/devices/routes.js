@@ -3,7 +3,6 @@ const router = express.Router();
 const auth = require("../../middlewares/authMiddleware");
 
 const {
-  addDevice,
   searchDevices,
   getSimpleDeviceData,
   getDeviceAnalytics,
@@ -11,6 +10,7 @@ const {
 } = require("./controllers/devicesController");
 
 const {
+  addDevice,
   getDeviceById,
   updateDevice,
   getDeviceByModelIdentifier,
@@ -23,8 +23,8 @@ router.get("/simple", getSimpleDeviceData);
 router.get("/analytics", getDeviceAnalytics);
 router.get("/id/:id", getDeviceById);
 router.get("/model/:id", getDeviceByModelIdentifier);
+router.patch("/id/:id", updateDevice);
 router.patch("/:deviceId/images", patchDeviceImages);
-router.patch("/:id", updateDevice);
 
 router.get("/", getDevices);
 
