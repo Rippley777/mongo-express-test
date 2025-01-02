@@ -3,8 +3,21 @@ const {
   applyNormalFilters,
   applyRangeFilters,
   applySorting,
-  applyPagination,
+  // applyPagination,
 } = require("../utils/queryHelpers");
+
+const filterKeys = [
+  "brand",
+  "difficulty",
+  "for_sale",
+  "in_stock",
+  "model_identifier",
+  "processor",
+  "recalled",
+  "storage_capacity",
+  "type",
+  "hardware_details.memory",
+];
 
 const searchDevices = async (req, res) => {
   try {
@@ -12,15 +25,7 @@ const searchDevices = async (req, res) => {
     const sortOptions = {};
 
     // Normal filters
-    applyNormalFilters(filters, req.query, [
-      "type",
-      "brand",
-      "model_identifier",
-      "in_stock",
-      "for_sale",
-      "recalled",
-      "difficulty",
-    ]);
+    applyNormalFilters(filters, req.query, filterKeys);
 
     // Range filters
     applyRangeFilters(filters, req.query, [

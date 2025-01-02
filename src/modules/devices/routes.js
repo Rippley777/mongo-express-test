@@ -16,8 +16,9 @@ const {
   getDeviceByModelIdentifier,
 } = require("./controllers/deviceController");
 const { patchDeviceImages } = require("./controllers/deviceImagesController");
-
+const { getSearchFilters } = require("./controllers/searchController");
 router.post("/add", addDevice);
+router.get("/search/filters", getSearchFilters);
 router.get("/search", searchDevices);
 router.get("/simple", getSimpleDeviceData);
 router.get("/analytics", getDeviceAnalytics);
