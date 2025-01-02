@@ -3,7 +3,6 @@ const router = express.Router();
 const auth = require("../../middlewares/authMiddleware");
 
 const {
-  searchDevices,
   getSimpleDeviceData,
   getDeviceAnalytics,
   getDevices,
@@ -16,12 +15,19 @@ const {
   getDeviceByModelIdentifier,
 } = require("./controllers/deviceController");
 const { patchDeviceImages } = require("./controllers/deviceImagesController");
-const { getSearchFilters } = require("./controllers/searchController");
+const {
+  searchDevices,
+  getSearchFilters,
+} = require("./controllers/searchController");
+
 router.post("/add", addDevice);
+
 router.get("/search/filters", getSearchFilters);
 router.get("/search", searchDevices);
+
 router.get("/simple", getSimpleDeviceData);
 router.get("/analytics", getDeviceAnalytics);
+
 router.get("/id/:id", getDeviceById);
 router.get("/model/:id", getDeviceByModelIdentifier);
 router.patch("/id/:id", updateDevice);

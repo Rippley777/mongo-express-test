@@ -5,33 +5,392 @@ const deviceSchema = new mongoose.Schema(
     type: { type: String, required: true },
     brand: { type: String, required: true },
     model_identifier: { type: String, required: true },
-    release_year: { type: Number, required: true },
+    release_date: { type: String, required: true },
+    discontinued_date: { type: String },
     model_number: { type: String, required: true, unique: true },
     repairability_score: { type: Number, required: true },
     hardware_details: {
-      memory: { type: String, required: true },
-      memory_connector: { type: String, required: true },
-      max_ram: { type: String },
-      storage: { type: String, required: true },
-      storage_connector: { type: String, required: true },
-      max_storage: { type: String },
-      processor: { type: String, required: true },
-      processor_socket: { type: String, required: true },
-      gpu_model: { type: String },
-      gpu_connector: { type: String },
-      screen_size: { type: String },
-      resolution: { type: String },
-      port_types: { type: [String] },
-      wireless: { type: String },
-      bluetooth_version: { type: String },
+      memory: {
+        format: {
+          type: String,
+          required: true,
+          enum: [
+            "DDR2",
+            "DDR3",
+            "DDR4",
+            "DDR5",
+            "LPDDR3",
+            "LPDDR4",
+            "LPDDR5",
+            "GDDR6",
+            "HBM2",
+            "Other",
+          ],
+        },
+        available_sizes: [
+          {
+            type: String,
+            required: true,
+          },
+        ],
+        max_ram: {
+          type: String,
+        },
+        speed: {
+          type: String,
+        },
+        ecc: {
+          type: Boolean,
+          default: false,
+        },
+        soldered: {
+          type: Boolean,
+          default: false,
+        },
+        channels: {
+          type: Number,
+        },
+      },
+      storage: {
+        type: [
+          {
+            type: {
+              type: String,
+              required: true,
+              enum: ["HDD", "SSD", "NVMe", "eMMC", "Hybrid", "Other"],
+            },
+            capacity: {
+              type: String,
+              required: true,
+            },
+            connector: {
+              type: String,
+              required: true,
+              enum: ["SATA", "PCIe", "M.2", "USB", "Other"],
+            },
+            max_capacity: {
+              type: String,
+            },
+            speed: {
+              type: String,
+            },
+            removable: {
+              type: Boolean,
+              default: false,
+            },
+            raid_support: {
+              type: Boolean,
+              default: false,
+            },
+          },
+        ],
+        required: true,
+      },
+      processor: {
+        model: {
+          type: String,
+          required: true,
+        },
+        socket: {
+          type: String,
+          required: true,
+        },
+        architecture: {
+          type: String,
+        },
+        cores: {
+          type: Number,
+        },
+        threads: {
+          type: Number,
+        },
+        base_clock: {
+          type: String,
+        },
+        boost_clock: {
+          type: String,
+        },
+        cache: {
+          type: String,
+        },
+        tdp: {
+          type: String,
+        },
+        integrated_graphics: {
+          type: String,
+        },
+        removable: {
+          type: Boolean,
+          default: false,
+        },
+      },
+      gpu: {
+        model: {
+          type: String,
+          required: true,
+        },
+        type: {
+          type: String,
+          enum: ["Integrated", "Dedicated", "External"],
+          required: true,
+        },
+        memory: {
+          type: String,
+        },
+        connector: {
+          type: String,
+          enum: ["PCIe", "M.2", "Thunderbolt", "USB-C", "Other"],
+        },
+        tdp: {
+          type: String,
+        },
+        removable: {
+          type: Boolean,
+          default: false,
+        },
+        cooling_type: {
+          type: String,
+          enum: ["Passive", "Active", "Liquid"],
+        },
+        supported_technologies: {
+          type: [String],
+        },
+      },
+      screen: {
+        size: {
+          type: String,
+          required: true,
+        },
+        resolution: {
+          type: String,
+          required: true,
+        },
+        aspect_ratio: {
+          type: String,
+        },
+        refresh_rate: {
+          type: Number,
+        },
+        panel_type: {
+          type: String,
+          enum: ["TN", "IPS", "OLED", "AMOLED", "VA", "Other"],
+        },
+        brightness: {
+          type: String,
+        },
+        touch_support: {
+          type: Boolean,
+          default: false,
+        },
+        hdr_support: {
+          type: Boolean,
+          default: false,
+        },
+      },
+      port_types: [
+        {
+          type: {
+            type: String,
+            required: true,
+            enum: [
+              "USB-A",
+              "USB-C",
+              "HDMI",
+              "DisplayPort",
+              "DVI",
+              "VGA",
+              "FireWire",
+              "Thunderbolt",
+              "Ethernet",
+              "Audio Jack",
+              "SD Card Slot",
+              "Power Connector",
+              "Other",
+            ],
+          },
+          version: {
+            type: String,
+          },
+          quantity: {
+            type: Number,
+            default: 1,
+          },
+          features: [
+            {
+              type: String,
+              enum: [
+                "Power Delivery",
+                "Video Output",
+                "Fast Charging",
+                "Data Only",
+                "Audio Support",
+                "Other",
+              ],
+            },
+          ],
+        },
+      ],
+      wireless: {
+        wifi: {
+          standard: {
+            type: String,
+            required: true,
+            enum: [
+              "802.11a",
+              "802.11b",
+              "802.11g",
+              "802.11n",
+              "802.11ac",
+              "802.11ax",
+            ],
+          },
+          frequency_bands: [
+            {
+              type: String,
+              enum: ["2.4GHz", "5GHz", "6GHz"],
+            },
+          ],
+          mimo_support: {
+            type: Boolean,
+            default: false,
+          },
+          max_speed: {
+            type: String,
+          },
+        },
+        bluetooth: {
+          version: {
+            type: String,
+          },
+          low_energy: {
+            type: Boolean,
+            default: true,
+          },
+        },
+        cellular: {
+          supported: {
+            type: Boolean,
+            default: false,
+          },
+          technology: {
+            type: String,
+            enum: ["4G LTE", "5G", "3G", "Other"],
+          },
+        },
+        nfc: {
+          type: Boolean,
+          default: false,
+        },
+        gps: {
+          type: Boolean,
+          default: false,
+        },
+      },
+      bluetooth: {
+        version: {
+          type: String,
+        },
+        profiles: [
+          {
+            type: String,
+            enum: ["A2DP", "HFP", "HSP", "HID", "PAN", "PBAP", "MAP", "Other"],
+          },
+        ],
+        codecs: [
+          {
+            type: String,
+            enum: ["SBC", "AAC", "aptX", "aptX HD", "LDAC", "Other"],
+          },
+        ],
+        range: {
+          type: String,
+        },
+        low_energy: {
+          type: Boolean,
+        },
+        multipoint: {
+          type: Boolean,
+        },
+        class: {
+          type: String,
+          enum: ["Class 1", "Class 2", "Class 3", "Other"],
+        },
+      },
+    },
+    optical: {
+      drive_type: {
+        type: String,
+        required: true,
+        enum: [
+          "SuperDrive",
+          "Combo Drive",
+          "Blu-ray",
+          "DVD-RW",
+          "CD-RW",
+          "None",
+          "Other",
+        ],
+      },
+      write_speed: {
+        type: String, // Example: "8x"
+      },
+      read_speed: {
+        type: String, // Example: "24x"
+      },
+      dual_layer_support: {
+        type: Boolean,
+        default: false,
+      },
+      removable: {
+        type: Boolean,
+        default: false,
+      },
     },
     repairability_insights: {
-      battery: { type: String, required: true },
-      ram_storage: { type: String, required: true },
-      tools_required: { type: String, required: true },
-      adhesive_level: { type: String },
-      cooling_system: { type: String },
+      tools_required: [
+        {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Tool",
+          required: true,
+        },
+      ],
+      battery: {
+        accessibility: {
+          type: String,
+          required: true,
+          enum: ["Easy", "Moderate", "Difficult"],
+        },
+        replacement_cost: {
+          type: String,
+        },
+        removable: {
+          type: Boolean,
+          default: false,
+        },
+      },
+      ram_storage: {
+        accessibility: {
+          type: String,
+          required: true,
+          enum: ["Not Upgradeable", "Easy", "Moderate", "Difficult"],
+        },
+        soldered: {
+          type: Boolean,
+          default: false,
+        },
+        max_upgradable: {
+          type: String,
+        },
+      },
+      adhesive_level: {
+        type: String,
+        enum: ["Low", "Medium", "High"],
+      },
+      cooling_system: {
+        type: String,
+      },
     },
+
     repair_difficulty: { type: String },
     disassembly_steps: { type: Number },
     disassembly_tool_count: { type: Number },
@@ -45,7 +404,9 @@ const deviceSchema = new mongoose.Schema(
     repair_guide_availability: { type: String },
     community_score: { type: Number },
     recyclability: { type: String },
+
     images: [{ type: mongoose.Schema.Types.ObjectId, ref: "DeviceImage" }],
+    version: { type: Number, default: 1 },
   },
   { timestamps: true }
 );
