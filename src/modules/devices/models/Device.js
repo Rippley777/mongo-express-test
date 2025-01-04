@@ -1,3 +1,11 @@
+// MA090LL/A
+// MD035LL/A
+// MD318LL/A
+// MGX72LL/A
+// MJLT2LL/A
+// MPXV2LL/A
+// MVVL2LL/A
+
 const mongoose = require("mongoose");
 
 const deviceSchema = new mongoose.Schema(
@@ -5,6 +13,8 @@ const deviceSchema = new mongoose.Schema(
     type: { type: String, required: true },
     brand: { type: String, required: true },
     model_identifier: { type: String, required: true },
+    // TODO i think i want think true once the data is cleaned up
+    model_description: { type: String },
     release_date: { type: String, required: true },
     discontinued_date: { type: String },
     model_number: { type: String, required: true, unique: true },
@@ -139,7 +149,7 @@ const deviceSchema = new mongoose.Schema(
         },
         connector: {
           type: String,
-          enum: ["PCIe", "M.2", "Thunderbolt", "USB-C", "Other"],
+          enum: ["PCIe", "M.2", "Thunderbolt", "USB-C", "N/A", "Other"],
         },
         tdp: {
           type: String,

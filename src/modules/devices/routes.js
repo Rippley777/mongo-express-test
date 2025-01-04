@@ -20,6 +20,8 @@ const {
   getSearchFilters,
 } = require("./controllers/searchController");
 
+const { addRequiredTools } = require("./controllers/toolsController");
+
 router.post("/add", addDevice);
 
 router.get("/search/filters", getSearchFilters);
@@ -31,6 +33,8 @@ router.get("/analytics", getDeviceAnalytics);
 router.get("/id/:id", getDeviceById);
 router.get("/model/:id", getDeviceByModelIdentifier);
 router.patch("/id/:id", updateDevice);
+
+router.post("/tools", /*auth,*/ addRequiredTools);
 router.patch("/:deviceId/images", patchDeviceImages);
 
 router.get("/", getDevices);
