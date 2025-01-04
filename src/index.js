@@ -4,9 +4,10 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const YAML = require("yamljs");
 const swaggerUi = require("swagger-ui-express");
-const socketIo = require("socket.io");
-const websocketSetup = require("./config/rtcsocket");
+// const socketIo = require("socket.io");
+// const websocketSetup = require("./config/rtcsocket");
 const swaggerDocument = YAML.load("src/spec/open-api.yaml");
+const websocketSetup = require("./websockets/socketSetup");
 
 const app = express();
 const PORT = process.env.PORT || 8080;
@@ -49,8 +50,7 @@ mongoose
     const server = app.listen(PORT, () =>
       console.log(`Server running on port ${PORT}`)
     );
-    const io = socketIo(server);
-    websocketSetup(io);
+    websocketSetup(server);
     websocketConfig(server);
   })
   .catch((err) => console.error("MongoDB connection error:", err));

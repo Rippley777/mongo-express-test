@@ -32,4 +32,4 @@ const analyticsSchema = new mongoose.Schema({
 
 analyticsSchema.index({ siteId: 1, createdAt: -1 }); // Efficient queries by site and time
 
-module.exports = mongoose.model("Analytics", analyticsSchema);
+module.exports = analyticsSchema;
