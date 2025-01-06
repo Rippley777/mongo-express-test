@@ -4,8 +4,6 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const YAML = require("yamljs");
 const swaggerUi = require("swagger-ui-express");
-// const socketIo = require("socket.io");
-// const websocketSetup = require("./config/rtcsocket");
 const swaggerDocument = YAML.load("src/spec/open-api.yaml");
 const websocketSetup = require("./websockets/socketSetup");
 
@@ -25,7 +23,7 @@ const apptRoutes = require("./modules/appointment/routes");
 const paraRoutes = require("./modules/para/routes");
 const devicesRoutes = require("./modules/devices/routes");
 
-const websocketConfig = require("./config/websocket");
+const websocketConfig = require("./config/websocket.js.chat.old");
 
 app.use(cors());
 app.use(express.json());

@@ -105,7 +105,11 @@ const rangeKeys = [
 const applyNormalFilters = (filters, query) => {
   filterKeys.forEach((key) => {
     if (query[key] !== undefined) {
-      filters[key] = query[key];
+      if (key === "model_identifier" && typeof query[key] === "string") {
+        filters[key] = query[key].split(",");
+      } else {
+        filters[key] = query[key];
+      }
     }
   });
 };
