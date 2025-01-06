@@ -2,6 +2,7 @@ const filterKeys = [
   "type",
   "brand",
   "model_identifier",
+  "model_description",
   "model_number",
   "release_date",
   "discontinued_date",

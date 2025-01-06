@@ -34,6 +34,7 @@ const deviceSchema = new mongoose.Schema(
             "LPDDR5",
             "GDDR6",
             "HBM2",
+            "Unified Memory",
             "Other",
           ],
         },
@@ -76,7 +77,15 @@ const deviceSchema = new mongoose.Schema(
             connector: {
               type: String,
               required: true,
-              enum: ["SATA", "PCIe", "M.2", "USB", "Other"],
+              enum: [
+                "SATA",
+                "PCIe",
+                "M.2",
+                "USB",
+                "Proprietary PCIe",
+                "Soldered (Integrated)",
+                "Other",
+              ],
             },
             max_capacity: {
               type: String,
@@ -183,7 +192,16 @@ const deviceSchema = new mongoose.Schema(
         },
         panel_type: {
           type: String,
-          enum: ["TN", "IPS", "OLED", "AMOLED", "VA", "Other"],
+          enum: [
+            "TN",
+            "IPS",
+            "OLED",
+            "AMOLED",
+            "VA",
+            "Retina Display (IPS)",
+            "Liquid Retina XDR (Mini-LED)",
+            "Other",
+          ],
         },
         brightness: {
           type: String,
@@ -215,6 +233,7 @@ const deviceSchema = new mongoose.Schema(
               "Audio Jack",
               "SD Card Slot",
               "Power Connector",
+              "MagSafe 3",
               "Other",
             ],
           },
@@ -252,6 +271,7 @@ const deviceSchema = new mongoose.Schema(
               "802.11n",
               "802.11ac",
               "802.11ax",
+              "802.11abg",
             ],
           },
           frequency_bands: [
