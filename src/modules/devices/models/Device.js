@@ -225,6 +225,7 @@ const deviceSchema = new mongoose.Schema(
               "USB-C",
               "HDMI",
               "DisplayPort",
+              "Mini DisplayPort",
               "DVI",
               "VGA",
               "FireWire",
@@ -232,6 +233,7 @@ const deviceSchema = new mongoose.Schema(
               "Ethernet",
               "Audio Jack",
               "SD Card Slot",
+              "ExpressCard Slot",
               "Power Connector",
               "MagSafe 3",
               "Other",
@@ -272,6 +274,7 @@ const deviceSchema = new mongoose.Schema(
               "802.11ac",
               "802.11ax",
               "802.11abg",
+              "802.11abgn",
             ],
           },
           frequency_bands: [
