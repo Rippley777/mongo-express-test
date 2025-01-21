@@ -9,10 +9,14 @@ const filterKeys = [
   "repairability_score",
   "hardware_details.memory.format",
   "hardware_details.memory.available_sizes",
+  "hardware_details.memory.max_ram",
+  "hardware_details.memory.speed",
   "hardware_details.memory.ecc",
   "hardware_details.memory.soldered",
   "hardware_details.memory.channels",
   "hardware_details.storage.type",
+  "hardware_details.storage.capacity",
+  "hardware_details.storage.max_capacity",
   "hardware_details.storage.connector",
   "hardware_details.storage.removable",
   "hardware_details.storage.raid_support",
@@ -22,6 +26,9 @@ const filterKeys = [
   "hardware_details.processor.cores",
   "hardware_details.processor.threads",
   "hardware_details.processor.cache",
+  "hardware_details.processor.base_clock",
+  "hardware_details.processor.boost_clock",
+  "hardware_details.processor.tdp",
   "hardware_details.processor.integrated_graphics",
   "hardware_details.processor.removable",
   "hardware_details.gpu.model",
@@ -82,6 +89,7 @@ const filterKeys = [
 ];
 const rangeKeys = [
   "hardware_details.memory.max_ram",
+  "hardware_details.memory.channels",
   "hardware_details.memory.speed",
   "hardware_details.storage.capacity",
   "hardware_details.storage.max_capacity",
@@ -101,6 +109,7 @@ const rangeKeys = [
   "optical.write_speed",
   "optical.read_speed",
   "repairability_insights.ram_storage.max_upgradable",
+  "disassembly_steps",
 ];
 // const sortKeys = {
 const applyNormalFilters = (filters, query) => {
