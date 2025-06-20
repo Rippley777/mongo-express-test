@@ -20,6 +20,7 @@ const uploadRoutes = require("./routes/uploadRoutes");
 const blogPostRoutes = require("./routes/blogPostRoutes");
 const productRoutes = require("./routes/productRoutes");
 const apptRoutes = require("./modules/appointment/routes");
+const apptRoutes = require("./modules/interviews/routes");
 const paraRoutes = require("./modules/para/routes");
 const devicesRoutes = require("./modules/devices/routes");
 
@@ -34,6 +35,7 @@ app.use("/api/todos", todoRoutes);
 app.use("/api/upload", uploadRoutes);
 app.use("/api/blogposts", blogPostRoutes);
 app.use("/api/products", productRoutes);
+app.use("/api/interviews", interviewsRoutes);
 app.use("/api/appointments", apptRoutes);
 app.use("/api/para", paraRoutes);
 app.use("/api/devices", devicesRoutes);
