@@ -12,12 +12,13 @@ exports.getInterviews = async (req, res) => {
 
 // @desc    Create new Interview
 exports.createInterview = async (req, res) => {
-  const { title, calendarId, userId, description, date, email } = req.body;
+  const { title, id, userId, company, description, date, email } = req.body;
   try {
     const newInterview = new Interview({
       title,
-      calendarId,
+      id,
       userId,
+      company,
       description,
       date,
       email,

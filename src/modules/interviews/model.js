@@ -6,11 +6,15 @@ const interviewSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
-    calendarId: {
+    id: {
       type: String,
       required: true,
     },
     userId: {
+      type: String,
+      required: true,
+    },
+    company: {
       type: String,
       required: true,
     },
@@ -19,11 +23,9 @@ const interviewSchema = new mongoose.Schema(
     },
     date: {
       type: Date,
-      required: true,
     },
     email: {
       type: String,
-      required: true,
     },
     isConfirmed: {
       type: Boolean,
