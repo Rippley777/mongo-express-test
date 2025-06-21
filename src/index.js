@@ -20,7 +20,7 @@ const uploadRoutes = require("./routes/uploadRoutes");
 const blogPostRoutes = require("./routes/blogPostRoutes");
 const productRoutes = require("./routes/productRoutes");
 const apptRoutes = require("./modules/appointment/routes");
-const apptRoutes = require("./modules/interviews/routes");
+const interviewsRoutes = require("./modules/interviews/routes");
 const paraRoutes = require("./modules/para/routes");
 const devicesRoutes = require("./modules/devices/routes");
 
