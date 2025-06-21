@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const appointmentSchema = new mongoose.Schema(
+const interviewSchema = new mongoose.Schema(
   {
     title: {
       type: String,
@@ -39,6 +39,6 @@ const appointmentSchema = new mongoose.Schema(
   }
 );
 
-const Appointment = mongoose.model("Interview", interviewSchema);
+const Interview = mongoose.model("Interview", interviewSchema);
 
 module.exports = Interview;
